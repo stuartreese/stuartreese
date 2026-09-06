@@ -10,13 +10,13 @@ export function Timeline() {
   const [openId, setOpenId] = useState<string>(roles[0].id);
 
   return (
-    <section id="work" className="scroll-mt-24 bg-parchment/50 py-20 sm:py-28">
+    <section id="work" className="scroll-mt-24 bg-paper-2/50 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Work"
           title={
             <>
-              A trail of <span className="display-italic text-forest">roles and results.</span>
+              A trail of <span className="display-italic text-accent">roles and results.</span>
             </>
           }
           blurb="Click any stop on the trail to see what the role involved and the numbers behind it."
@@ -48,7 +48,7 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
       <span
         aria-hidden
         className={`absolute left-0 top-2 grid h-9 w-9 place-items-center rounded-full border-2 text-xs font-semibold transition sm:h-11 sm:w-11 sm:text-sm ${
-          open ? "border-forest bg-forest text-cream scale-110" : "border-moss bg-cream text-forest"
+          open ? "border-accent bg-block text-cream scale-110" : "border-moss bg-card text-accent"
         }`}
       >
         {current ? "now" : role.start.slice(-2)}
@@ -61,14 +61,14 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
         aria-controls={panelId}
         className={`group w-full rounded-3xl border p-5 text-left transition sm:p-6 ${
           open
-            ? "border-forest/30 bg-cream shadow-lift"
-            : "border-sand bg-cream/60 hover:border-moss hover:bg-cream hover:-translate-y-0.5 hover:shadow-soft"
+            ? "border-accent/30 bg-card shadow-lift"
+            : "border-line bg-card/60 hover:border-moss hover:bg-card hover:-translate-y-0.5 hover:shadow-soft"
         }`}
       >
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
           <div>
             <h3 className="display text-2xl leading-tight sm:text-3xl">{role.title}</h3>
-            <p className="mt-1 text-base font-medium text-forest">{role.company}</p>
+            <p className="mt-1 text-base font-medium text-accent">{role.company}</p>
           </div>
           <div className="text-sm text-ink/60 sm:text-right">
             <p className="font-medium text-ink/80">
@@ -78,7 +78,7 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
           </div>
         </div>
         <p className="mt-3 max-w-2xl text-ink/75">{role.summary}</p>
-        <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-clay">
+        <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-terracotta">
           {open ? "Hide details" : "Description & metrics"}
           <span aria-hidden className={`inline-block transition-transform ${open ? "rotate-180" : "group-hover:translate-y-0.5"}`}>↓</span>
         </span>
@@ -90,8 +90,8 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
       >
         <div className="overflow-hidden">
           <div className="mt-3 grid gap-4 lg:grid-cols-[1fr_1fr]">
-            <div className="rounded-3xl border border-sand bg-cream p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">What I did</p>
+            <div className="rounded-3xl border border-line bg-card p-5 sm:p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta">What I did</p>
               <ul className="mt-3 space-y-2.5 text-[15px] leading-relaxed text-ink/85">
                 {role.description.map((d) => (
                   <li key={d} className="flex gap-3">
@@ -103,7 +103,7 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
             </div>
 
             {role.metrics.length > 0 ? (
-              <div className="rounded-3xl bg-forest p-5 text-cream sm:p-6">
+              <div className="rounded-3xl bg-block p-5 text-cream sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ochre">By the numbers</p>
                 <ul className="mt-3 grid gap-x-5 gap-y-4 sm:grid-cols-2">
                   {role.metrics.map((m) => (
@@ -121,9 +121,9 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
                 </ul>
               </div>
             ) : (
-              <div className="rounded-3xl border border-dashed border-moss/60 bg-cream/40 p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-clay">By the numbers</p>
-                <p className="display-italic mt-3 text-xl text-forest">Still writing this chapter.</p>
+              <div className="rounded-3xl border border-dashed border-moss/60 bg-card/40 p-5 sm:p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-terracotta">By the numbers</p>
+                <p className="display-italic mt-3 text-xl text-accent">Still writing this chapter.</p>
                 <p className="mt-2 text-sm text-ink/70">Check back soon for the metrics, or ask me about it directly.</p>
               </div>
             )}
