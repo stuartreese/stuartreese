@@ -39,6 +39,10 @@ The form posts to `/api/contact` and sends email through [Resend](https://resend
 2. In Vercel go to **Settings > Environment Variables** and add `RESEND_API_KEY`. Optionally set `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` (see `.env.example`).
 3. Redeploy.
 
+### Light and dark mode
+
+The sun/moon button in the nav switches themes. The choice is saved in the browser, and first-time visitors get whatever their device prefers. Dark mode uses the "by the numbers" forest green as its base. Both palettes live at the top of `src/app/globals.css`.
+
 ### Easter egg
 
 Type `f1` anywhere on the page, or click "try the lights" in the Credentials section.

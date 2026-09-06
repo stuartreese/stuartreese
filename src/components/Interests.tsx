@@ -13,7 +13,7 @@ export function Interests() {
           eyebrow="Life outside work"
           title={
             <>
-              What keeps me <span className="display-italic text-forest">grounded.</span>
+              What keeps me <span className="display-italic text-accent">grounded.</span>
             </>
           }
           blurb="Hover or tap a card. This is the part of the site that is not on the resume."
@@ -22,7 +22,7 @@ export function Interests() {
           {interests.map((it, i) => (
             <Reveal as="li" key={it.id} delay={i * 70}>
               <TiltCard>
-                <div className="flex h-full flex-col rounded-3xl border border-sand bg-cream p-6 shadow-soft">
+                <div className="flex h-full flex-col rounded-3xl border border-line bg-card p-6 shadow-soft">
                   <span aria-hidden className="text-4xl">{it.icon}</span>
                   <h3 className="display mt-4 text-2xl">{it.title}</h3>
                   <p className="mt-2 text-ink/80">{it.blurb}</p>
@@ -32,7 +32,7 @@ export function Interests() {
                       href={it.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-auto inline-flex items-center gap-1 pt-5 text-sm font-medium text-clay hover:text-ember"
+                      className="mt-auto inline-flex items-center gap-1 pt-5 text-sm font-medium text-terracotta hover:text-ember"
                     >
                       {it.cta} <span aria-hidden>↗</span>
                     </a>

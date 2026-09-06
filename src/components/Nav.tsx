@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { href: "#story", label: "Story" },
@@ -33,12 +34,12 @@ export function Nav() {
           aria-label="Primary"
           className={`flex items-center justify-between rounded-full border px-4 py-2 transition-all duration-300 ${
             scrolled
-              ? "border-sand/80 bg-cream/85 shadow-soft backdrop-blur-md"
+              ? "border-line/80 bg-card/85 shadow-soft backdrop-blur-md"
               : "border-transparent bg-transparent"
           }`}
         >
           <a href="#top" className="group flex items-center gap-2" aria-label="Back to top">
-            <span className="display grid h-9 w-9 place-items-center rounded-full bg-forest text-cream text-sm font-semibold transition-transform group-hover:-rotate-6">
+            <span className="display grid h-9 w-9 place-items-center rounded-full bg-block text-cream text-sm font-semibold transition-transform group-hover:-rotate-6">
               SR
             </span>
             <span className="hidden sm:inline text-sm font-medium tracking-wide">{site.name}</span>
@@ -55,11 +56,12 @@ export function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a
               href={site.links.calendly}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-clay px-4 py-2 text-sm font-medium text-cream shadow-soft transition hover:bg-ember hover:-translate-y-0.5"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-clay px-4 py-2 text-sm font-medium text-cream shadow-soft transition hover:bg-clay-deep hover:-translate-y-0.5"
             >
               Book a chat
               <span aria-hidden>↗</span>
@@ -67,7 +69,7 @@ export function Nav() {
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
-              className="md:hidden grid h-9 w-9 place-items-center rounded-full border border-sand bg-cream"
+              className="md:hidden grid h-9 w-9 place-items-center rounded-full border border-line bg-card"
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label="Toggle menu"
@@ -82,7 +84,7 @@ export function Nav() {
         </nav>
 
         {open && (
-          <div id="mobile-menu" className="md:hidden mt-2 rounded-3xl border border-sand bg-cream/95 p-4 shadow-lift backdrop-blur-md">
+          <div id="mobile-menu" className="md:hidden mt-2 rounded-3xl border border-line bg-card/95 p-4 shadow-lift backdrop-blur-md">
             <ul className="flex flex-col gap-3 text-base">
               {links.map((l) => (
                 <li key={l.href}>
