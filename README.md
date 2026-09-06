@@ -39,20 +39,11 @@ The form posts to `/api/contact` and sends email through [Resend](https://resend
 2. In Vercel go to **Settings > Environment Variables** and add `RESEND_API_KEY`. Optionally set `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` (see `.env.example`).
 3. Redeploy.
 
-### Live running stats (optional)
+### Running log
 
-The "Running log" under Life Outside Work pulls from Strava. Until it is configured the section simply stays hidden.
+Strava keeps its API behind a paid tier, so the "Running log" under Life Outside Work reads hand-entered numbers from the `running` object in `src/content/site.ts`. Fill in miles, runs, hours, your latest run, and up to ten recent runs (oldest first) every few weeks, and bump the `updated` label. Leave `ytdMiles` as `null` to hide the section.
 
-1. Go to https://www.strava.com/settings/api and create an app. Any name works, and set the Authorization Callback Domain to `localhost`.
-2. Copy the Client ID and Client Secret, then run this once on your laptop and follow the prompts:
-
-   ```bash
-   STRAVA_CLIENT_ID=xxxx STRAVA_CLIENT_SECRET=yyyy npm run strava:auth
-   ```
-
-3. Add the three values it prints (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`) in Vercel under **Settings > Environment Variables**, then redeploy.
-
-Stats refresh about every 30 minutes.
+If you ever do get API access, run `npm run strava:auth` once, add the three `STRAVA_*` values it prints in Vercel, and the section switches to live data on its own.
 
 ### Resume PDF
 

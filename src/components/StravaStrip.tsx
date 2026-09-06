@@ -1,23 +1,43 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { site } from "@/content/site";
+import { running, site } from "@/content/site";
 import type { StravaResult, StravaSummary } from "@/lib/strava";
 import { Reveal } from "@/components/Reveal";
 
+type LogData = StravaSummary & { live: boolean; updatedLabel: string };
+
+// Hand-entered numbers from src/content/site.ts, shaped like the live response.
+function manualData(): LogData | null {
+  if (running.ytdMiles === null) return null;
+  return {
+    live: false,
+    configured: true,
+    updatedLabel: `Updated ${running.updated}.`,
+    fetchedAt: "",
+    ytd: { miles: running.ytdMiles, runs: running.ytdRuns ?? 0, hours: running.ytdHours ?? 0, elevationFt: 0 },
+    recent4w: { miles: running.last4wMiles ?? 0, runs: 0 },
+    lastRun: running.lastRun,
+    spark: running.recent.slice(-10),
+  };
+}
+
 /**
- * Running log fed by Strava. Renders nothing until data arrives, and nothing
- * at all when the Strava keys are not configured.
+ * Running log. Starts from the hand-entered numbers in the content file, then
+ * upgrades to live Strava data if the API keys are configured. Renders nothing
+ * when neither is available.
  */
 export function StravaStrip() {
-  const [data, setData] = useState<StravaSummary | null>(null);
+  const [data, setData] = useState<LogData | null>(manualData);
 
   useEffect(() => {
     let alive = true;
     fetch("/api/strava")
       .then((r) => (r.ok ? (r.json() as Promise<StravaResult>) : null))
       .then((json) => {
-        if (alive && json && json.configured) setData(json);
+        if (alive && json && json.configured) {
+          setData({ ...json, live: true, updatedLabel: `Live from Strava. Updated ${relativeTime(json.fetchedAt)}.` });
+        }
       })
       .catch(() => {});
     return () => {
@@ -32,7 +52,7 @@ export function StravaStrip() {
     { value: data.ytd.runs.toLocaleString("en-US"), label: "runs this year" },
     { value: data.recent4w.miles.toLocaleString("en-US"), label: "miles, last 4 weeks" },
     { value: data.ytd.hours.toLocaleString("en-US"), label: "hours on feet this year" },
-  ];
+  ].filter((t) => t.value !== "0");
 
   return (
     <Reveal className="mt-6 overflow-hidden rounded-3xl border border-line bg-card shadow-soft">
@@ -41,7 +61,7 @@ export function StravaStrip() {
           <span aria-hidden className="text-2xl">🏃</span>
           <div>
             <p className="display text-xl leading-none">Running log</p>
-            <p className="mt-1 text-xs text-ink/60">Live from Strava. Updated {relativeTime(data.fetchedAt)}.</p>
+            <p className="mt-1 text-xs text-ink/60">{data.updatedLabel}</p>
           </div>
         </div>
         <a href={site.links.strava} target="_blank" rel="noreferrer" className="text-sm font-medium text-terracotta hover:text-ember">

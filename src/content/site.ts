@@ -57,6 +57,20 @@ export const now = {
   ],
 };
 
+// Running log. Strava's API is behind a paid tier, so fill these in by hand from the
+// Strava app every few weeks. Leave ytdMiles as null to hide the section entirely.
+// If the STRAVA_* env vars are ever set, live data replaces these automatically.
+export const running = {
+  updated: "September 2026",
+  ytdMiles: null as number | null,
+  ytdRuns: null as number | null,
+  last4wMiles: null as number | null,
+  ytdHours: null as number | null,
+  lastRun: null as { name: string; miles: number; pace: string; date: string } | null,
+  // Oldest first, up to 10. Dates as YYYY-MM-DD.
+  recent: [] as { miles: number; date: string; name: string }[],
+};
+
 export const principles = [
   {
     title: "People first, process second, ego last.",
