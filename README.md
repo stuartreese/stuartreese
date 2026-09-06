@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @stuartreese
 - 👀 I’m interested in people, data, and the outdoors
-- 🌱 I’m currently learning SQL, R, and Python
+- 🌱 I’m currently learning how to build internal tools with AI
 - 💞️ I’m looking to collaborate on any project
 - 📫 How to reach me instagram.com/stuartreese
 - 😄 Pronouns: He
@@ -38,21 +38,6 @@ The form posts to `/api/contact` and sends email through [Resend](https://resend
 1. Create a free Resend account and generate an API key.
 2. In Vercel go to **Settings > Environment Variables** and add `RESEND_API_KEY`. Optionally set `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` (see `.env.example`).
 3. Redeploy.
-
-### Live running stats (optional)
-
-The "Running log" under Life Outside Work pulls from Strava. Until it is configured the section simply stays hidden.
-
-1. Go to https://www.strava.com/settings/api and create an app. Any name works, and set the Authorization Callback Domain to `localhost`.
-2. Copy the Client ID and Client Secret, then run this once on your laptop and follow the prompts:
-
-   ```bash
-   STRAVA_CLIENT_ID=xxxx STRAVA_CLIENT_SECRET=yyyy npm run strava:auth
-   ```
-
-3. Add the three values it prints (`STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, `STRAVA_REFRESH_TOKEN`) in Vercel under **Settings > Environment Variables**, then redeploy.
-
-Stats refresh about every 30 minutes.
 
 ### Resume PDF
 

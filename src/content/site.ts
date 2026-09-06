@@ -52,7 +52,7 @@ export const now = {
   updated: "September 2026",
   items: [
     { label: "Building", text: "Internal tools that give the NPSA team one clear view of every grant, deadline, and client." },
-    { label: "Studying", text: "PMP exam prep, with SQL, R, and Python on the side." },
+    { label: "Learning", text: "How to put AI to work: building internal tools for the team and finding hours in the workday." },
     { label: "Training for", text: "Consistent fall miles and a faster 10K before the year is out." },
   ],
 };
@@ -297,4 +297,4 @@ export const certifications = [
   { name: "Project Management Professional (PMP), PMI", status: "In progress", done: false },
 ];
 
-export const learning = ["SQL", "R", "Python"];
+export const learning = ["AI agents", "Internal tooling", "Workflow automation"];
