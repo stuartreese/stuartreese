@@ -8,9 +8,8 @@ import { useEffect, type ReactNode, type ElementType } from "react";
  */
 export function RevealObserver() {
   useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     if (!("IntersectionObserver" in window)) {
-      els.forEach((el) => el.classList.add("is-visible"));
+      document.querySelectorAll<HTMLElement>(".reveal").forEach((el) => el.classList.add("is-visible"));
       return;
     }
     const io = new IntersectionObserver(
@@ -24,8 +23,26 @@ export function RevealObserver() {
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
     );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    const watch = (root: ParentNode) => {
+      root.querySelectorAll<HTMLElement>(".reveal:not(.is-visible)").forEach((el) => io.observe(el));
+    };
+    watch(document);
+    // Sections that mount later (for example, data that arrives after a fetch) still reveal.
+    const mo = new MutationObserver((records) => {
+      for (const r of records) {
+        r.addedNodes.forEach((n) => {
+          if (n instanceof HTMLElement) {
+            if (n.classList.contains("reveal")) io.observe(n);
+            watch(n);
+          }
+        });
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, []);
   return null;
 }

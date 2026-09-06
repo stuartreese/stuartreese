@@ -7,6 +7,7 @@ const socials = [
   { label: "Instagram", href: site.links.instagram },
   { label: "Strava", href: site.links.strava },
   { label: "GitHub", href: site.links.github },
+  { label: "Resume (PDF)", href: site.resumePath },
 ];
 
 export function Footer() {

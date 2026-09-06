@@ -4,9 +4,10 @@ import { useEffect, useRef } from "react";
 
 /**
  * Live topographic contour lines drawn on a canvas.
- * A slowly drifting noise field is sliced into iso-lines with marching squares.
- * The cursor (or a finger) raises a soft hill in the field, so the contours
- * bend and gather around it the way a real map wraps around a peak.
+ * A fixed noise field is sliced into iso-lines with marching squares.
+ * The field sits still on its own. The cursor (or a finger) raises a soft hill
+ * in it, so the contours bend and gather around the pointer the way a real map
+ * wraps around a peak, then settle back once it leaves.
  */
 export function TopoField({ className = "" }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -57,9 +58,8 @@ export function TopoField({ className = "" }: { className?: string }) {
 
     const target = { x: -9999, y: -9999, on: false };
     const cursor = { x: -9999, y: -9999, strength: 0 };
-    let t = Math.random() * 100;
+    const t = 37.5;
     let raf = 0;
-    let visible = true;
     let strokeStyle = "rgba(111,143,99,0.35)";
     let frame = 0;
 
@@ -81,7 +81,7 @@ export function TopoField({ className = "" }: { className?: string }) {
       rows = Math.ceil(height / CELL) + 1;
       field = new Float32Array(cols * rows);
       readColor();
-      if (reduceMotion) draw();
+      draw();
     };
 
     const sample = () => {
@@ -154,10 +154,8 @@ export function TopoField({ className = "" }: { className?: string }) {
 
     const tick = () => {
       raf = 0;
-      if (!visible) return;
       frame++;
       if (frame % 30 === 0) readColor();
-      t += 0.0028;
       // ease the cursor hill toward the pointer
       const k = 0.12;
       if (target.on) {
@@ -172,7 +170,8 @@ export function TopoField({ className = "" }: { className?: string }) {
         cursor.strength += (0 - cursor.strength) * 0.05;
       }
       draw();
-      raf = requestAnimationFrame(tick);
+      // Keep animating only while the hill is rising, following, or settling.
+      if (target.on || cursor.strength > 0.004) raf = requestAnimationFrame(tick);
     };
 
     const onMove = (e: PointerEvent) => {
@@ -180,6 +179,7 @@ export function TopoField({ className = "" }: { className?: string }) {
       target.x = e.clientX - r.left;
       target.y = e.clientY - r.top;
       target.on = true;
+      if (!raf) raf = requestAnimationFrame(tick);
     };
     const onLeave = () => {
       target.on = false;
@@ -189,26 +189,21 @@ export function TopoField({ className = "" }: { className?: string }) {
     ro.observe(parent);
     resize();
 
-    const io = new IntersectionObserver((entries) => {
-      visible = entries.some((en) => en.isIntersecting);
-      if (visible && !reduceMotion && !raf) raf = requestAnimationFrame(tick);
+    const mo = new MutationObserver(() => {
+      readColor();
+      if (!raf) draw();
     });
-    io.observe(parent);
-
-    const mo = new MutationObserver(readColor);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     if (!reduceMotion) {
       parent.addEventListener("pointermove", onMove, { passive: true });
       parent.addEventListener("pointerleave", onLeave);
       parent.addEventListener("pointercancel", onLeave);
-      raf = requestAnimationFrame(tick);
     }
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
       ro.disconnect();
-      io.disconnect();
       mo.disconnect();
       parent.removeEventListener("pointermove", onMove);
       parent.removeEventListener("pointerleave", onLeave);
