@@ -29,7 +29,7 @@ export const headlineStats = [
 
 export const story = {
   lead:
-    "In the fall of 2024 my family and I moved to the Jackson area to be closer to my wife's work and our kids' school. That move opened the door to Nonprofit Security Advisors, where I serve as Director of Grants and Co-Director of Operations.",
+    "In the fall of 2024 my family and I moved to the Jackson area to be closer to my wife's work and our kids' school. After serving at The Mustard Seed, the door to Nonprofit Security Advisors, where I serve as Director of Grants and Co-Director of Operations.",
   focus: [
     "Strengthening internal systems and processes",
     "Guiding grant strategy, compliance, and execution",
