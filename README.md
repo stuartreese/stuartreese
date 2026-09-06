@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @stuartreese
 - 👀 I’m interested in people, data, and the outdoors
-- 🌱 I’m currently learning SQL, R, and Python
+- 🌱 I’m currently learning how to build internal tools with AI
 - 💞️ I’m looking to collaborate on any project
 - 📫 How to reach me instagram.com/stuartreese
 - 😄 Pronouns: He
@@ -38,12 +38,6 @@ The form posts to `/api/contact` and sends email through [Resend](https://resend
 1. Create a free Resend account and generate an API key.
 2. In Vercel go to **Settings > Environment Variables** and add `RESEND_API_KEY`. Optionally set `CONTACT_TO_EMAIL` and `CONTACT_FROM_EMAIL` (see `.env.example`).
 3. Redeploy.
-
-### Running log
-
-Strava keeps its API behind a paid tier, so the "Running log" under Life Outside Work reads hand-entered numbers from the `running` object in `src/content/site.ts`. Fill in miles, runs, hours, your latest run, and up to ten recent runs (oldest first) every few weeks, and bump the `updated` label. Leave `ytdMiles` as `null` to hide the section.
-
-If you ever do get API access, run `npm run strava:auth` once, add the three `STRAVA_*` values it prints in Vercel, and the section switches to live data on its own.
 
 ### Resume PDF
 

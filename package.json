@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "prebuild": "node scripts/build-resume.mjs",
-    "resume": "node scripts/build-resume.mjs",
-    "strava:auth": "node scripts/strava-auth.mjs"
+    "resume": "node scripts/build-resume.mjs"
   },
   "dependencies": {
     "next": "16.3.4",

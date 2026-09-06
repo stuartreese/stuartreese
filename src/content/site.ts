@@ -52,23 +52,9 @@ export const now = {
   updated: "September 2026",
   items: [
     { label: "Building", text: "Internal tools that give the NPSA team one clear view of every grant, deadline, and client." },
-    { label: "Studying", text: "PMP exam prep, with SQL, R, and Python on the side." },
+    { label: "Learning", text: "How to put AI to work: building internal tools for the team and finding hours in the workday." },
     { label: "Training for", text: "Consistent fall miles and a faster 10K before the year is out." },
   ],
-};
-
-// Running log. Strava's API is behind a paid tier, so fill these in by hand from the
-// Strava app every few weeks. Leave ytdMiles as null to hide the section entirely.
-// If the STRAVA_* env vars are ever set, live data replaces these automatically.
-export const running = {
-  updated: "September 2026",
-  ytdMiles: null as number | null,
-  ytdRuns: null as number | null,
-  last4wMiles: null as number | null,
-  ytdHours: null as number | null,
-  lastRun: null as { name: string; miles: number; pace: string; date: string } | null,
-  // Oldest first, up to 10. Dates as YYYY-MM-DD.
-  recent: [] as { miles: number; date: string; name: string }[],
 };
 
 export const principles = [
@@ -311,4 +297,4 @@ export const certifications = [
   { name: "Project Management Professional (PMP), PMI", status: "In progress", done: false },
 ];
 
-export const learning = ["SQL", "R", "Python"];
+export const learning = ["AI agents", "Internal tooling", "Workflow automation"];

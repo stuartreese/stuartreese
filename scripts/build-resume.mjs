@@ -67,8 +67,8 @@ doc.font("Helvetica").fontSize(10).fillColor(INK).text(education.degree);
 
 heading("Certifications and skills");
 for (const c of certifications) bullet(`${c.name} (${c.status})`);
-bullet(`Currently learning ${learning.join(", ")}`);
-bullet("Operations, grant strategy and compliance, hospitality, volunteer leadership, process design, technology support");
+bullet(`Currently learning: ${learning.join(", ")}, with a focus on building AI-assisted tools for small teams`);
+bullet("Operations, grant strategy and compliance, hospitality, volunteer leadership, process design, data analytics, technology support");
 
 doc.end();
 console.log("resume.pdf written to", path.relative(process.cwd(), out));
