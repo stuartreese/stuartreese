@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
-import { Topo } from "@/components/Topo";
+import { TopoField } from "@/components/TopoField";
 
 const words = ["Relational", "Strategic", "Leader"];
 
@@ -28,16 +28,11 @@ export function Hero() {
 
   return (
     <section ref={wrap} className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
-      <div
-        className="pointer-events-none absolute -inset-x-10 -top-20 bottom-0 -z-10 text-moss/30 animate-drift"
-        style={{ transform: "translate3d(calc(var(--mx, 0) * -14px), calc(var(--my, 0) * -10px), 0)" }}
-      >
-        <Topo className="h-full w-full" />
-      </div>
+      <TopoField className="text-moss/45" />
       <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[32rem] w-[32rem] rounded-full bg-ochre/20 blur-3xl" />
       <div className="pointer-events-none absolute -left-40 bottom-0 -z-10 h-[28rem] w-[28rem] rounded-full bg-sage/30 blur-3xl" />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.35fr_0.65fr]">
         <div>
           <p className="reveal inline-flex items-center gap-2 rounded-full border border-line bg-paper-2/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-accent">
             <span className="relative flex h-2 w-2">
@@ -86,7 +81,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm lg:max-w-md">
+        <div className="relative mx-auto w-full max-w-[240px] sm:max-w-[280px] lg:max-w-[340px]">
           <div
             className="relative"
             style={{ transform: "translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px), 0)" }}
