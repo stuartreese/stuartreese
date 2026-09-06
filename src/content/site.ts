@@ -7,7 +7,8 @@ export const site = {
   tagline: "Relational. Strategic. Leader.",
   intro:
     "I help mission-driven organizations build systems that support people instead of slowing them down.",
-  url: "https://stuartreese.com",
+  url: "https://www.stuartreese.com",
+  resumePath: "/resume.pdf",
   email: "stuartreese9@gmail.com",
   description:
     "Stuart Reese is a nonprofit operations and grants leader in Jackson, Mississippi. Take a minute to find out more about how he works.",
@@ -29,7 +30,7 @@ export const headlineStats = [
 
 export const story = {
   lead:
-    "In the fall of 2024 my family and I moved to the Jackson area to be closer to my wife's work and our kids' school. After serving at The Mustard Seed, the door to Nonprofit Security Advisors, where I serve as Director of Grants and Co-Director of Operations.",
+    "In the fall of 2024 my family and I moved to the Jackson area to be closer to my wife's work and our kids' school. After serving at The Mustard Seed, the door opened to Nonprofit Security Advisors, where I serve as Director of Grants and Co-Director of Operations.",
   focus: [
     "Strengthening internal systems and processes",
     "Guiding grant strategy, compliance, and execution",
@@ -45,6 +46,39 @@ export const story = {
   ],
   quote: "You will find me at my best when the people and the process are pulling in the same direction.",
 };
+
+// Edit this whenever life changes. Keep it to one line each.
+export const now = {
+  updated: "September 2026",
+  items: [
+    { label: "Building", text: "Internal tools that give the NPSA team one clear view of every grant, deadline, and client." },
+    { label: "Studying", text: "PMP exam prep, with SQL, R, and Python on the side." },
+    { label: "Training for", text: "Consistent fall miles and a faster 10K before the year is out." },
+  ],
+};
+
+export const principles = [
+  {
+    title: "People first, process second, ego last.",
+    body: "The best system in the world fails if the people running it feel unseen. I start with the people, then build what serves them.",
+  },
+  {
+    title: "Clarity is kindness.",
+    body: "Clear expectations, clear timelines, a clear yes or no. Ambiguity costs a team more than a hard conversation ever will.",
+  },
+  {
+    title: "Build it so it runs without you.",
+    body: "If a process only works when I am in the room, it is not finished. Good systems make people more capable, not more dependent.",
+  },
+  {
+    title: "Hospitality is a leadership skill.",
+    body: "How a room feels when someone walks in is a decision, whether that room is a retreat center, a board meeting, or a Zoom call.",
+  },
+  {
+    title: "Numbers earn trust. Relationships keep it.",
+    body: "I bring the data to the table, and then I stay for the conversation.",
+  },
+];
 
 export type Metric = {
   value: number;

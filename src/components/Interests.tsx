@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { interests } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { StravaStrip } from "@/components/StravaStrip";
 
 export function Interests() {
   return (
@@ -42,6 +43,7 @@ export function Interests() {
             </Reveal>
           ))}
         </ul>
+        <StravaStrip />
       </div>
     </section>
   );

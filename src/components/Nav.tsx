@@ -10,6 +10,7 @@ const links = [
   { href: "#life", label: "Life" },
   { href: "#credentials", label: "Credentials" },
   { href: "#contact", label: "Contact" },
+  { href: site.resumePath, label: "Resume", external: true },
 ];
 
 export function Nav() {
@@ -48,7 +49,12 @@ export function Nav() {
           <ul className="hidden md:flex items-center gap-6 text-sm">
             {links.map((l) => (
               <li key={l.href}>
-                <a className="link-ink text-ink/80 hover:text-ink" href={l.href}>
+                <a
+                  className="link-ink text-ink/80 hover:text-ink"
+                  href={l.href}
+                  target={l.external ? "_blank" : undefined}
+                  rel={l.external ? "noreferrer" : undefined}
+                >
                   {l.label}
                 </a>
               </li>
@@ -88,7 +94,13 @@ export function Nav() {
             <ul className="flex flex-col gap-3 text-base">
               {links.map((l) => (
                 <li key={l.href}>
-                  <a className="block py-1" href={l.href} onClick={() => setOpen(false)}>
+                  <a
+                    className="block py-1"
+                    href={l.href}
+                    target={l.external ? "_blank" : undefined}
+                    rel={l.external ? "noreferrer" : undefined}
+                    onClick={() => setOpen(false)}
+                  >
                     {l.label}
                   </a>
                 </li>

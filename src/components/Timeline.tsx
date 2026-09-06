@@ -1,13 +1,42 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { roles, type Role } from "@/content/site";
 import { Counter } from "@/components/Counter";
-import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 
 export function Timeline() {
   const [openId, setOpenId] = useState<string>(roles[0].id);
+  const listRef = useRef<HTMLOListElement>(null);
+  const [trail, setTrail] = useState({ progress: 0, reached: 1 });
+  const progress = trail.progress;
+
+  // The trail draws itself as the reader scrolls: the solid line reaches
+  // whatever sits about 60% down the viewport.
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
+      const y = Math.max(0, Math.min(r.height, window.innerHeight * 0.6 - r.top));
+      const items = Array.from(el.querySelectorAll<HTMLLIElement>(":scope > li"));
+      const reached = Math.max(1, items.filter((li) => li.offsetTop + 12 <= y).length);
+      setTrail((t) => (t.progress === y && t.reached === reached ? t : { progress: y, reached }));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
     <section id="work" className="scroll-mt-24 bg-paper-2/50 py-20 sm:py-28">
@@ -22,13 +51,24 @@ export function Timeline() {
           blurb="Click any stop on the trail to see what the role involved and the numbers behind it."
         />
 
-        <ol className="relative mt-14">
+        <ol ref={listRef} className="relative mt-14">
           <span aria-hidden className="trail-line absolute left-[1.05rem] top-2 bottom-2 w-0.5 sm:left-[1.3rem]" />
+          <span
+            aria-hidden
+            className="absolute left-[1.05rem] top-2 w-0.5 rounded-full bg-accent transition-[height] duration-150 ease-out sm:left-[1.3rem]"
+            style={{ height: `${Math.max(0, progress - 8)}px` }}
+          />
+          <span
+            aria-hidden
+            className="absolute left-[1.05rem] h-3 w-3 -translate-x-[5px] rounded-full bg-accent shadow-[0_0_0_4px_var(--color-paper-2),0_0_18px_2px_var(--color-accent)] transition-[top] duration-150 ease-out sm:left-[1.3rem]"
+            style={{ top: `${Math.max(2, progress - 12)}px`, opacity: progress > 4 ? 1 : 0 }}
+          />
           {roles.map((role, i) => (
             <TimelineItem
               key={role.id}
               role={role}
               index={i}
+              reached={i < trail.reached}
               open={openId === role.id}
               onToggle={() => setOpenId((cur) => (cur === role.id ? "" : role.id))}
             />
@@ -39,16 +79,32 @@ export function Timeline() {
   );
 }
 
-function TimelineItem({ role, index, open, onToggle }: { role: Role; index: number; open: boolean; onToggle: () => void }) {
+function TimelineItem({
+  role,
+  index,
+  open,
+  reached,
+  onToggle,
+}: {
+  role: Role;
+  index: number;
+  open: boolean;
+  reached: boolean;
+  onToggle: () => void;
+}) {
   const panelId = useId();
   const current = role.end === "Present";
 
   return (
-    <Reveal as="li" delay={index * 60} className="relative pl-12 pb-8 sm:pl-16 last:pb-0">
+    <li className="reveal relative pl-12 pb-8 sm:pl-16 last:pb-0" style={{ "--reveal-delay": `${index * 60}ms` } as React.CSSProperties}>
       <span
         aria-hidden
-        className={`absolute left-0 top-2 grid h-9 w-9 place-items-center rounded-full border-2 text-xs font-semibold transition sm:h-11 sm:w-11 sm:text-sm ${
-          open ? "border-accent bg-block text-cream scale-110" : "border-moss bg-card text-accent"
+        className={`absolute left-0 top-2 grid h-9 w-9 place-items-center rounded-full border-2 text-xs font-semibold transition-all duration-500 sm:h-11 sm:w-11 sm:text-sm ${
+          open
+            ? "border-accent bg-block text-cream scale-110"
+            : reached
+              ? "border-accent bg-card text-accent"
+              : "border-line bg-card text-ink/40"
         }`}
       >
         {current ? "now" : role.start.slice(-2)}
@@ -130,6 +186,6 @@ function TimelineItem({ role, index, open, onToggle }: { role: Role; index: numb
           </div>
         </div>
       </div>
-    </Reveal>
+    </li>
   );
 }
